@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="chart" width="800" height="400"></canvas>
+  <script>
+    chartIt()
+    async function chartIt(){
+      const dataN = await dataNorthern("NH.Ts+dSST.csv")
+      const dataS = await dataSouthern("SH.Ts+dSST.csv")
+      const ctx = document.getElementById('chart');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dataN.xyear,
+          datasets: [{
+            label: 'Northern Hemisphere Anual Mean',
+            data: dataN.yAnualMean,
+            borderWidth: 1
+          },{
+            label: 'Southern Hemisphere Anual Mean',
+            data: dataS.yAnualMean,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: false
+            }
+          }
+        }
+      });
+    }
+    
+    async function dataNorthern(e){
+      return getData(e)
+    }
+    async function dataSouthern(e){
+      return getData(e)
+    } 
+    
+    async function getData(e){
+      const xyear = []
+      const yAnualMean = []
+      const response = await fetch(e)
+      const data = await response.text()
+      
+      const table = data.split("\n").slice(2)
+      table.forEach(row =>{
+        const columns = row.split(",")
+        const year = columns[0]
+        xyear.push(year)
+        const anualMean = columns[13]
+        yAnualMean.push(parseFloat(anualMean)+14)
+
+      })
+      return {xyear,yAnualMean}
+    }
+  </script>
+</body>
+</html>

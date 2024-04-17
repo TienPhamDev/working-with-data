@@ -16,12 +16,12 @@
       const ctx = document.getElementById('myChart');
       
       new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-          labels: data.ageChart,
+          labels: data.salaryChart,
           datasets: [{
             label: 'Social Media Purchase',
-            data: data.salaryChart,
+            data: data.ageChart,
             borderWidth: 1
           }]
         },
@@ -39,7 +39,7 @@
       const ageChart=[]
       const salaryChart=[]
       const purchasedChart =[]
-      const res = await fetch("test.csv")
+      const res = await fetch("social_ads.csv")
       const data = await res.text()
 
       const table = data.split("\n").slice(1)
