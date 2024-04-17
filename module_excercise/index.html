@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fetch and Graph CSV excercise</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <canvas id="myChart" width="800" height="400"></canvas>
+  
+  <script>
+    chartIt()
+    async function chartIt(){
+      const data = await getData()
+      const ctx = document.getElementById('myChart');
+      
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.ageChart,
+          datasets: [{
+            label: 'Social Media Purchase',
+            data: data.salaryChart,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+      
+    }
+    async function getData(){
+      const ageChart=[]
+      const salaryChart=[]
+      const purchasedChart =[]
+      const res = await fetch("test.csv")
+      const data = await res.text()
+
+      const table = data.split("\n").slice(1)
+      table.forEach(row =>{
+        const columns = row.split(",")
+        const age = row[0]
+        ageChart.push(age)
+        const salary = row[1]
+        salaryChart.push(salary)
+        const purchased = row[2]
+        purchasedChart.push(purchased)
+      })
+      return {ageChart,salaryChart,purchasedChart}
+      
+    }
+  </script>
+</body>
+</html>
