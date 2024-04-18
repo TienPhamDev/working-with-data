@@ -15,12 +15,12 @@
       const data = await response.json()
       const {latidude,longtidude} = data
       let output = ""
-      data.map(e =>{
+      data.map((e) => {
         output += `<p>${latidude}</p>
                   <p>${longtidude}</p>`
       })
-      test.innerHTML=output
-    }
+      test.innerHTML = output
+      }
     getISS()
   </script>
 </body>

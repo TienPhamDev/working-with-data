@@ -10,18 +10,18 @@
   <canvas id="myChart" width="800" height="400"></canvas>
   
   <script>
-    chartIt()
     async function chartIt(){
-      const data = await getData()
-      const ctx = document.getElementById('myChart');
       
+    }
+      const ctx = document.getElementById('myChart');
+    
       new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-          labels: data.salaryChart,
+          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
           datasets: [{
             label: 'Social Media Purchase',
-            data: data.ageChart,
+            data: [12, 19, 3, 5, 2, 3],
             borderWidth: 1
           }]
         },
@@ -33,13 +33,13 @@
           }
         }
       });
-      
-    }
+    
+    getData()
     async function getData(){
       const ageChart=[]
       const salaryChart=[]
       const purchasedChart =[]
-      const res = await fetch("social_ads.csv")
+      const res = await fetch("test.csv")
       const data = await res.text()
 
       const table = data.split("\n").slice(1)
@@ -48,7 +48,7 @@
         const age = row[0]
         ageChart.push(age)
         const salary = row[1]
-        salaryChart.push(salary)
+        salary.push(salary)
         const purchased = row[2]
         purchasedChart.push(purchased)
       })
