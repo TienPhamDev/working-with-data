@@ -6,6 +6,21 @@
   <title>Fetch_json</title>
 </head>
 <body>
-  
+  <div>
+    <h1>Where is the ISS ?</h1>
+    <p>lat: <span id="latitude"></span>&deg;</p>
+    <p>lon: <span id="longitude"></span>&deg;</p>
+  </div>
+  <script>
+    const api_url = "https://api.wheretheiss.at/v1/satellites/25544"
+    async function getIss(){
+      const res = await fetch(api_url)
+      const data = await res.json()
+      const {latitude,longitude} = data
+      document.getElementById("latitude").textContent = latitude.toFixed(2)
+      document.getElementById("longitude").textContent = longitude.toFixed(2)
+    }
+    getIss()
+  </script>
 </body>
 </html>
