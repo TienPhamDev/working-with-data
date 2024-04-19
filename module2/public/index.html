@@ -3,71 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-  crossorigin=""/>
-  <title>Fetch json from API and map lat lon</title>
-  <style>
-    #issMap{
-      height: 480px;
-    }
-  </style>
+  <title>Document</title>
 </head>
 <body>
-  <div id="issMap"></div>
-  <div>
-    <h1>Where is the ISS ?</h1>
-    <div id="iss"></div>
-  </div>
-   <!-- Make sure you put this AFTER Leaflet's CSS -->
- <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
- integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
- crossorigin=""></script>
   <script>
-    const map = L.map('issMap').setView([0, -0], 1);
-                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                  maxZoom: 19,
-                  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                  }).addTo(map);
-    const api_url ="https://api.wheretheiss.at/v1/satellites/25544"
-    const iss = document.querySelector("#iss")
-    const issIcon = L.icon({
-      iconUrl: 'International_Space_Station.png',
-      
-  
-      iconSize:     [50, 32], // size of the icon
-     
-      iconAnchor:   [25, 16], // point of the icon which will correspond to marker's location
-      
-  });
-    const marker =  L.marker([0, 0],{icon:issIcon}).addTo(map);
-    async function getData(){
-      let firsttime = true;
-      const response = await fetch(api_url)
-      const data = await response.json()
-      const {latitude,longitude} = data
-
-      marker.setLatLng([latitude,longitude])
-      if(firsttime){
-        map.setView([latitude,longitude],2)
-        firsttime = false
-      }
-      iss.innerHTML = `<p>Lat: ${latitude.toFixed(2)}°</p><p>Long: ${longitude.toFixed(2)}°</p>`    
+    if("geolocation" in navigator){
+      console.log("geolocation is available")
+      navigator.geolocation.getCurrentPosition((position)=>{
+        const lat = position.coords.latitude
+        const lon = position.coords.longitude
+        document.getElementById("latitude").textContent = lat.toFixed(2)
+        document.getElementById("longitude").textContent = lon.toFixed(2)
+      })
+    } else {
+      console.log("geolocation is not available")
     }
-//    async function displayData(){
-//      const loadData = await getData()
-//      let dataDisplay = loadData.map((e)=>{
-//        const {latitude,longitude} = e
-//        return `<p>${latitude}</p>
-//                <p>${longitude}</p>`
-//        })
-//        test.innerHTML = dataDisplay
-//    }
-  
-    getData()
-    setInterval(getData,1000)  
-      
-      
   </script>
+  <h1>Where my location ?</h1>
+  <p>Lat: <span id="latitude"></span>&deg;</p>
+  <p>Lon: <span id="longitude"></span>&deg;</p>
 </body>
 </html>
