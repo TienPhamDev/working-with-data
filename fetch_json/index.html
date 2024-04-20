@@ -24,29 +24,37 @@
   </div>
   <div id="map"></div>
   <script>
-    const map = L.map('map').setView([51.505, -0.09], 13)
-    const marker = L.marker([51.5, -0.09]).addTo(map);
-    const icon = L.icon({
-      iconUrl: 'International_Space_Station.png',
-      iconSize:     [50, 36], // size of the icon
-      
-      iconAnchor:   [25, 18], // point of the icon which will correspond to marker's location
-      
-      
-  });
+    const map = L.map('map').setView([0,0], 2)
     const tile = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                }).addTo(map);
+      maxZoom: 2,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+    const issIcon = L.icon({
+      iconUrl: 'International_Space_Station.png',
+      iconSize:     [50, 32], // size of the icon
+      
+      iconAnchor:   [25, 16], // point of the icon which will correspond to marker's location
+      
+      
+    });
+    const marker = L.marker([0, 0],{icon:issIcon}).addTo(map);
     const api_url = "https://api.wheretheiss.at/v1/satellites/25544"
+    let firstTime = true
     async function getIss(){
       const res = await fetch(api_url)
       const data = await res.json()
       const {latitude,longitude} = data
+      marker.setLatLng([latitude,longitude])
+      if(firstTime){
+        map.setView([latitude,longitude],2)
+        firstTime = false
+      }
       document.getElementById("latitude").textContent = latitude.toFixed(2)
       document.getElementById("longitude").textContent = longitude.toFixed(2)
+      
     }
     getIss()
+    setInterval(getIss,1000)
   </script>
 </body>
 </html>
