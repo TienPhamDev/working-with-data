@@ -33,7 +33,9 @@
       navigator.geolocation.getCurrentPosition((position)=>{
         const lat = position.coords.latitude
         const lon = position.coords.longitude
-        marker.setLatlng([lat,lon])
+        map.setView([lat,lon],2)
+        marker.setLatLng([lat,lon]).addTo(map)
+
         document.getElementById("latitude").textContent = lat.toFixed(2)
         document.getElementById("longitude").textContent = lon.toFixed(2)
       })
