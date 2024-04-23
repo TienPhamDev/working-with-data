@@ -9,24 +9,39 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
+  <style>
+    #map{
+      height:180px;
+    }
+  </style>
   <title>Show user location</title>
 </head>
 <body>
+  <h1>Where my location ?</h1>
+  <p>Lat: <span id="latitude"></span>&deg;</p>
+  <p>Lon: <span id="longitude"></span>&deg;</p>
+  <div id="map"></div>
   <script>
+    const map = L.map('map').setView([0, 0], 13);
+    const tile =L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+    const marker = L.marker([0, 0]).addTo(map);
     if("geolocation" in navigator){
       console.log("geolocation is available")
       navigator.geolocation.getCurrentPosition((position)=>{
         const lat = position.coords.latitude
         const lon = position.coords.longitude
+        marker.setLatlng([lat,lon])
         document.getElementById("latitude").textContent = lat.toFixed(2)
         document.getElementById("longitude").textContent = lon.toFixed(2)
       })
     } else {
       console.log("geolocation is not available")
     }
+    
   </script>
-  <h1>Where my location ?</h1>
-  <p>Lat: <span id="latitude"></span>&deg;</p>
-  <p>Lon: <span id="longitude"></span>&deg;</p>
+
 </body>
 </html>
