@@ -16,6 +16,7 @@
   "author": "Tien",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "nedb": "^1.8.0"
   }
 }
