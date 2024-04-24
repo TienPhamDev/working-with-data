@@ -13,15 +13,24 @@
     #map{
       height:180px;
     }
+    .hidden{
+      display: none;
+    }
   </style>
   <title>Show user location</title>
 </head>
 <body>
   <h1>Where my location ?</h1>
-  <p>Lat: <span id="latitude"></span>&deg;</p>
-  <p>Lon: <span id="longitude"></span>&deg;</p>
+  <button class="btn-location">Show my location
+  </button>
+  <div class="location hidden">
+    <p>Lat: <span id="latitude"></span>&deg;</p>
+    <p>Lon: <span id="longitude"></span>&deg;</p>
+  </div>
   <div id="map"></div>
   <script>
+    const locationBtn = document.querySelector(".btn-location")
+    const locationDiv = document.querySelector(".location")
     const map = L.map('map').setView([0, 0], 13);
     const tile =L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
@@ -42,7 +51,9 @@
     } else {
       console.log("geolocation is not available")
     }
-    
+    locationBtn.addEventListener("click",(e)=>{
+      locationDiv.classList.toggle("hidden")
+    })
   </script>
 
 </body>
