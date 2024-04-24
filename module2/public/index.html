@@ -28,7 +28,9 @@
     <p>Lon: <span id="longitude"></span>&deg;</p>
   </div>
   <div id="map"></div>
+  <button class="btn-toServer">Submit</button>
   <script>
+    const submitBtn = document.querySelector(".btn-toServer")
     const locationBtn = document.querySelector(".btn-location")
     const locationDiv = document.querySelector(".location")
     const map = L.map('map').setView([0, 0], 13);
@@ -37,20 +39,37 @@
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
     const marker = L.marker([0, 0]).addTo(map);
-    if("geolocation" in navigator){
-      console.log("geolocation is available")
-      navigator.geolocation.getCurrentPosition((position)=>{
-        const lat = position.coords.latitude
-        const lon = position.coords.longitude
-        map.setView([lat,lon],2)
-        marker.setLatLng([lat,lon]).addTo(map)
 
-        document.getElementById("latitude").textContent = lat.toFixed(2)
-        document.getElementById("longitude").textContent = lon.toFixed(2)
-      })
-    } else {
-      console.log("geolocation is not available")
-    }
+    let lat,lon
+    submitBtn.addEventListener("click",async (e)=>{
+      const data = {lat,lon}
+      const options ={
+        method :"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify(data)
+      }        
+      const response = await fetch("/api",options)
+      const json = await response.json()
+      console.log(json)     
+    })
+      if("geolocation" in navigator){
+        console.log("geolocation is available")
+        navigator.geolocation.getCurrentPosition(async (position)=>{
+          lat = position.coords.latitude
+          lon = position.coords.longitude
+          map.setView([lat,lon],2)
+          marker.setLatLng([lat,lon]).addTo(map)
+          
+          document.getElementById("latitude").textContent = lat.toFixed(2)
+          document.getElementById("longitude").textContent = lon.toFixed(2)
+          
+        })
+      }
+      else {
+        console.log("geolocation is not available")
+      }
     locationBtn.addEventListener("click",(e)=>{
       locationDiv.classList.toggle("hidden")
     })
