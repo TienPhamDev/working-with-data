@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Dadta selfie App</h1>
+  <script>
+    getData()
+    async function getData(){
+      const response = await fetch("/api")
+      const data = await response.json()
+      
+      data.forEach(e =>{
+        const root = document.createElement("div")
+        const vegetable = document.createElement("div")
+        vegetable.textContent = `vegetable : ${e.vegetable}`
+        const geo = document.createElement("div")
+        geo.textContent = `${e.lat} , ${e.lon}`
+        const date = document.createElement("div")
+        const dateString = new Date(e.timestamp).toLocaleString()
+        date.textContent = dateString
+
+        root.append(vegetable,geo,date)
+        document.body.append(root)
+      })
+
+    }
+  </script>
+</body>
+</html>

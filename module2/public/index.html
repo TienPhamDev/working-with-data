@@ -28,8 +28,10 @@
     <p>Lon: <span id="longitude"></span>&deg;</p>
   </div>
   <div id="map"></div>
+  <input type="text" class="vegetable">
   <button class="btn-toServer">Submit</button>
   <script>
+    const input = document.querySelector(".vegetable")
     const submitBtn = document.querySelector(".btn-toServer")
     const locationBtn = document.querySelector(".btn-location")
     const locationDiv = document.querySelector(".location")
@@ -42,7 +44,8 @@
 
     let lat,lon
     submitBtn.addEventListener("click",async (e)=>{
-      const data = {lat,lon}
+      const vegetable = input.value
+      const data = {lat,lon,vegetable}
       const options ={
         method :"POST",
         headers:{
