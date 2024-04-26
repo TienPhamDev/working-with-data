@@ -15,16 +15,20 @@
       const data = await response.json()
       
       data.forEach(e =>{
-        const root = document.createElement("div")
+        const root = document.createElement("p")
         const vegetable = document.createElement("div")
-        vegetable.textContent = `vegetable : ${e.vegetable}`
         const geo = document.createElement("div")
-        geo.textContent = `${e.lat} , ${e.lon}`
         const date = document.createElement("div")
         const dateString = new Date(e.timestamp).toLocaleString()
+        const image = document.createElement("img")
+        
+        image.src = e.image64
+        
+        vegetable.textContent = `vegetable : ${e.vegetable}`
+        geo.textContent = `${e.lat} , ${e.lon}`
         date.textContent = dateString
 
-        root.append(vegetable,geo,date)
+        root.append(vegetable,geo,date,image)
         document.body.append(root)
       })
 
