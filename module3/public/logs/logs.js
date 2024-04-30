@@ -17,7 +17,7 @@ async function getData(){
     geo.textContent = `${e.lat} , ${e.lon}`
     date.textContent = dateString
 
-    root.append(vegetable,geo,date,image)
+    root.append(vegetable,geo,date)
     document.body.append(root)
   })
 
