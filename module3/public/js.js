@@ -1,7 +1,7 @@
 function setup(){
   noCanvas()
-  // const video = createCapture(VIDEO)
-  // video.size(320,240)
+  //const video = createCapture(VIDEO)
+  //video.size(320,240)
   
   const input = document.querySelector(".vegetable")
   const submitBtn = document.querySelector(".btn-toServer")
@@ -17,8 +17,8 @@ function setup(){
   let lat,lon
   submitBtn.addEventListener("click",async (e)=>{
     const vegetable = input.value
-    // video.loadPixels()
-    const image64 = video.canvas.toDataURL()
+    //video.loadPixels()
+    //const image64 = video.canvas.toDataURL()
     const data = {lat,lon,vegetable}
     const options ={
       method :"POST",
