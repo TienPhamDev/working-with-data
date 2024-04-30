@@ -1,0 +1,22 @@
+{
+  "name": "module2",
+  "version": "1.0.0",
+  "description": "this is the data selfie app by Joey Lee",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "example,data,selfie"
+  },
+  "keywords": [
+    "Tien"
+  ],
+  "author": "Tien",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nedb": "^1.8.0"
+  }
+}
