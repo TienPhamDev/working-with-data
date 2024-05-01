@@ -41,7 +41,10 @@ function setup(){
         
         document.getElementById("latitude").textContent = lat.toFixed(2)
         document.getElementById("longitude").textContent = lon.toFixed(2)
-        
+        const weather_api = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2ac0853cf2600b52a44fe777cfe0df30`
+        const res = await fetch(weather_api)
+        const json = await res.json()
+        console.log(json)
       })
     }
     else {
